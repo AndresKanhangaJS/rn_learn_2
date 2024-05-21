@@ -1,20 +1,39 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import * as Font from 'expo-font';
+import * as SplashScreen from 'expo-splash-screen';
+import Home from './screens/home';
+import HomeStack from './routes/homeStack';
+
+// Mantenha a tela de splash visível enquanto as fontes são carregadas
+SplashScreen.preventAutoHideAsync();
+
+const getFonts = () => {
+  return Font.loadAsync({
+    'nunito-regular': require('./assets/fonts/Nunito-Regular.ttf'),
+    'nunito-bold': require('./assets/fonts/Nunito-Bold.ttf'),
+  });
+};
 
 export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
-}
+  const [fontsLoaded, setFontsLoaded] = useState(false);
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+  useEffect(() => {
+    const loadFonts = async () => {
+      try {
+        await getFonts();
+        setFontsLoaded(true);
+        SplashScreen.hideAsync();
+      } catch (e) {
+        console.warn(e);
+      }
+    };
+
+    loadFonts();
+  }, []);
+
+  if (!fontsLoaded) {
+    return null; // Retorna nulo até que as fontes estejam carregadas
+  }
+
+  return <HomeStack />;
+}
