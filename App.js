@@ -3,6 +3,7 @@ import * as Font from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
 import Home from './screens/home';
 import HomeStack from './routes/homeStack';
+import Navigator from './routes/drawer';
 
 // Mantenha a tela de splash visível enquanto as fontes são carregadas
 SplashScreen.preventAutoHideAsync();
@@ -35,5 +36,6 @@ export default function App() {
     return null; // Retorna nulo até que as fontes estejam carregadas
   }
 
-  return <HomeStack />;
+  // return <HomeStack />;
+  return <Navigator />; // Renderiza o Drawer Navigator
 }
