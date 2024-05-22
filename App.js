@@ -4,11 +4,12 @@ import * as SplashScreen from 'expo-splash-screen';
 import Home from './screens/home';
 import HomeStack from './routes/homeStack';
 import Navigator from './routes/drawer';
+import { NavigationContainer } from '@react-navigation/native';
 
 // Mantenha a tela de splash visível enquanto as fontes são carregadas
 SplashScreen.preventAutoHideAsync();
 
-const getFonts = () => {
+const getFonts = async () => {
   return Font.loadAsync({
     'nunito-regular': require('./assets/fonts/Nunito-Regular.ttf'),
     'nunito-bold': require('./assets/fonts/Nunito-Bold.ttf'),
@@ -36,6 +37,9 @@ export default function App() {
     return null; // Retorna nulo até que as fontes estejam carregadas
   }
 
-  // return <HomeStack />;
-  return <Navigator />; // Renderiza o Drawer Navigator
+  return (
+    <NavigationContainer>
+      <Navigator />
+    </NavigationContainer>
+  );
 }
